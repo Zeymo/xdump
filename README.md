@@ -32,7 +32,7 @@ ForeWNuNjAwWkRlc1dJQ3NId3NVY0R1Qk5XUTRUSGJZdHN2MkVuUnRpU1F1WGZLcmpsMHhJTXAyWElEQ
 
 ## Quick Start
 
-### bootstrap
+### Bootstrap
 ```
 sudo java -jar xdump.jar -h 
 usage:  [-f <arg>] [-h] [--host <arg>] [-i <arg>] [--ignoreHeartbeat] [-p <arg>] [--port <arg>]
@@ -44,13 +44,13 @@ usage:  [-f <arg>] [-h] [--host <arg>] [-i <arg>] [--ignoreHeartbeat] [-p <arg>]
 + --ignoreHeartbeat: ignore heart beat frame (not implement yet)
 + --f: bfpFilter expression, host and port will be ignored when set value 
 
-### Reserved print key
+### Reserved Key
 + channel: peer address
 + requestId: unique RPC ID , etc. streamId for gRPC
 + transport: protocol, etc. gRPC/RSocket/xRPC...
 + startLine: service unique key , etc :path for gRPC
 + len: data length
-+ data: bytes after base64
++ data: bytes (uncompress if compressed)base64
 
 ## Example
 
