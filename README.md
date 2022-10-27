@@ -8,10 +8,8 @@ channel       [S:/1.1.1.1:63894 -> R:/2.2.2.2:5908]
 requestId     3                                                                                                                                                
 transport     gRPC                                                                                                                                             
 starLine      /com.xx.yy.HelloWord/say                                                                                                       
-content-type  application/grpc+proto                                                                                                                         
-dt            p                                                                                                                                                
-grpc-timeout  100000m                                                                                                                                          
-mid           7f000001_1e06_184184f3329_1 0                                                                                                                                                                                                                                                      
+content-type  application/grpc+proto                                                                                                                                                                                                                                                                       
+grpc-timeout  100000m                                                                                                                                                                                                                                                                                                                                                                                               
 te            trailers                                                                                                                                         
 ua            iOS/10.0.3 (iPhone9,1;en_US) App/3.0.1.67 Channel/201200                                                                                                                                                            
 len           49                                                                                                                                               
@@ -33,6 +31,8 @@ ForeWNuNjAwWkRlc1dJQ3NId3NVY0R1Qk5XUTRUSGJZdHN2MkVuUnRpU1F1WGZLcmpsMHhJTXAyWElEQ
 + glibc
 
 ## Quick Start
+
+### bootstrap
 ```
 sudo java -jar xdump.jar -h 
 usage:  [-f <arg>] [-h] [--host <arg>] [-i <arg>] [--ignoreHeartbeat] [-p <arg>] [--port <arg>]
@@ -43,6 +43,14 @@ usage:  [-f <arg>] [-h] [--host <arg>] [-i <arg>] [--ignoreHeartbeat] [-p <arg>]
 + --networkInterface: network interface, entry select condition when not set
 + --ignoreHeartbeat: ignore heart beat frame (not implement yet)
 + --f: bfpFilter expression, host and port will be ignored when set value 
+
+### Reserved print key
++ channel: peer address
++ requestId: unique RPC ID , etc. streamId for gRPC
++ transport: protocol, etc. gRPC/RSocket/xRPC...
++ startLine: service unique key , etc :path for gRPC
++ len: data length
++ data: bytes after base64
 
 ## Example
 
