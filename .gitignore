@@ -1,0 +1,8 @@
+.idea/
+# IntelliJ
+/out/
+### Maven template
+target/
+
+
+
