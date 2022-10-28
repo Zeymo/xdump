@@ -1,6 +1,10 @@
 package zeymo.protocol.dump;
 
+import io.netty.channel.EventLoop;
+import io.netty.channel.EventLoopGroup;
+import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.util.concurrent.DefaultEventExecutorGroup;
+import io.netty.util.concurrent.DefaultThreadFactory;
 import io.netty.util.concurrent.EventExecutorGroup;
 import org.pcap4j.core.*;
 import org.pcap4j.packet.IpV4Packet;
@@ -18,8 +22,7 @@ import java.util.concurrent.TimeoutException;
  */
 public class DumpWorker {
     private PcapNetworkInterface networkInterface;
-    private EventExecutorGroup bossEvenLoopGroup = new DefaultEventExecutorGroup(1);
-    private EventExecutorGroup workerExecutorGroup = new DefaultEventExecutorGroup(1);
+    private EventExecutorGroup eventLoop = new DefaultEventExecutorGroup(1);
     private ConcurrentHashMap<String, Session> sessions = new ConcurrentHashMap<String, Session>();
     private DumpChannelFactory dumpChannelFactory;
     private Configuration configuration;
@@ -34,7 +37,7 @@ public class DumpWorker {
         PcapHandle handle = networkInterface.openLive(65536, PcapNetworkInterface.PromiscuousMode.PROMISCUOUS, 10);
         handle.setFilter(configuration.getFilter(), BpfProgram.BpfCompileMode.OPTIMIZE);
 
-        bossEvenLoopGroup.submit(() -> {
+        eventLoop.submit(() -> {
             while (true) {
                 try {
                     Packet packet = handle.getNextPacketEx();
@@ -75,14 +78,8 @@ public class DumpWorker {
 
                         Packet payload = tcp.getPayload();
                         if (payload != null) {
-                            final Session activeSession = session;
-                            workerExecutorGroup.submit(() -> {
-                                synchronized (activeSession) {
-                                    activeSession.onMessageReceive(payload, tcpHeader, new Date());
-                                }
-                            });
+                            session.onMessageReceive(payload, tcpHeader, new Date());
                         }
-
                     }
                 } catch (TimeoutException e) {
                     continue;
@@ -99,6 +96,4 @@ public class DumpWorker {
         });
 
     }
-
-
 }

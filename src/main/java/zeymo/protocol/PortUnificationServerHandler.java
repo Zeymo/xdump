@@ -8,6 +8,9 @@ import java.net.URI;
 import java.util.Iterator;
 import java.util.List;
 
+/**
+ * @author Zeymo
+ */
 public class PortUnificationServerHandler extends ByteToMessageDecoder {
     private final URI uri;
     private final List<Protocol> protocols;

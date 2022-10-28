@@ -4,6 +4,8 @@ import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 
 /**
+ * copy from Dubbo
+ *
  * @author Zeymo
  */
 public interface ProtocolDetector {
